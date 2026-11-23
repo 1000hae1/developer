@@ -20,15 +20,14 @@
 
     <!-- ═══ 고정 UI: 윗선 · 도장 · 면접 요청 · 왼쪽 눈금자 · 챕터 라벨 ═══ -->
     <div class="topline" aria-hidden="true"></div>
-    <a class="seal" href="#ch1" aria-label="처음으로">源</a>
-    <a class="cta" href="mailto:1000hae1@naver.com">면접 요청</a>
-    <div class="rail" aria-hidden="true"></div>
-    <p class="chapter-label" id="chapterLabel" aria-hidden="true">— Ch. 1 THE DEVELOPER</p>
+    <a class="seal" href="#ch1" aria-label="처음으로"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 9.5 17 3.5"/><path d="M17 5c2-2.2 6-2.6 8.5-1-1.6 2.6-5 3.6-8.5 1Z"/><circle cx="10" cy="13" r="2.9"/><circle cx="16" cy="13" r="2.9"/><circle cx="22" cy="13" r="2.9"/><circle cx="13" cy="18.6" r="2.9"/><circle cx="19" cy="18.6" r="2.9"/><circle cx="16" cy="24.2" r="2.9"/></svg></a>
+    <div class="rail" aria-hidden="true"><span class="rail__dots"><i></i><i></i><i></i><i></i></span></div>
+    <p class="chapter-label is-hidden" id="chapterLabel" aria-hidden="true"></p>
 
     <main>
 
         <!-- ═══════════ Ch.1 THE DEVELOPER — 고정 화면 확대 시퀀스 ═══════════ -->
-        <section id="ch1" class="hero" data-label="— Ch. 1 THE DEVELOPER" data-theme="dark">
+        <section id="ch1" class="hero" data-label="" data-theme="dark">
             <div class="hero__layer hero__l1"><img src="/images/cut1.webp" alt="여성 선비가 화첩에 포도를 그리고 시동이 먹을 가는 장면" width="1672" height="941"></div>
             <div class="hero__layer hero__l15"><img src="/images/cut1-5.webp" alt="" width="1672" height="941"></div>
             <div class="hero__layer hero__l2"><img src="/images/cut2.webp" alt="" width="1672" height="941"></div>
@@ -38,11 +37,14 @@
 
             <div class="hero__copy">
                 <div class="hero__top">
-                    <h1>4년차 개발자,<br><span>천해원.</span></h1>
+                    <h1>4년차 개발자,<br>천해원.</h1>
                     <p class="hero__sub">시간을 채우는 직원이 아니라,<br>서비스를 짓는 사람.</p>
-                    <span class="hero__plus" aria-hidden="true">+</span>
                 </div>
-                <p class="hero__desc">Java · Spring으로 서버를, Vue · React로 화면을 짓습니다. 서비스 하나를 웹부터 정산까지 혼자 개발하고 운영했습니다.</p>
+                <div class="hero__foot">
+                    <svg class="hero__star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C12.6 7.4 16.6 11.4 24 12C16.6 12.6 12.6 16.6 12 24C11.4 16.6 7.4 12.6 0 12C7.4 11.4 11.4 7.4 12 0Z"/></svg>
+                    <span class="hero__tag">WHAT I DO</span>
+                    <p class="hero__desc">Java · Spring으로 서버를, Vue로 화면을 짓습니다. 서비스 하나를 웹부터 정산까지 혼자 개발하고 운영했습니다.</p>
+                </div>
             </div>
         </section>
 

@@ -16,6 +16,7 @@ document.querySelectorAll('[data-label]').forEach((sec) => {
     onToggle: (self) => {
       if (!self.isActive) return;
       label.textContent = sec.dataset.label;
+      label.classList.toggle('is-hidden', !sec.dataset.label);
       label.classList.toggle('is-light', sec.dataset.theme === 'light');
     },
   });

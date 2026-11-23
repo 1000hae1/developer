@@ -21,45 +21,49 @@
   --mono: 'IBM Plex Mono', 'IBM Plex Sans KR', monospace;
   --batang: 'Gowun Batang', serif;
 
-  --rail: 44px;
+  --rail: 72px;
+  --top: 68px;
 }
 
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
-body { margin: 0; font-family: var(--body); color: var(--ink); background: var(--hanji); }
+body { margin: 0; word-break: keep-all; font-family: var(--body); color: var(--ink); background: var(--hanji); }
 img { display: block; max-width: 100%; }
 a { color: inherit; }
 h1, h2, h3, p { margin: 0; }
 
 /* ── 고정 UI ───────────────────────────────── */
-.topline { position: fixed; left: 0; right: 0; top: 64px; height: 1px; background: rgba(128,128,128,.45); z-index: 50; pointer-events: none; }
+.topline { position: fixed; left: 0; right: 0; top: var(--top); height: 1px; background: rgba(128,128,128,.45); z-index: 50; pointer-events: none; }
 .seal {
-  position: fixed; left: 6px; top: 14px; z-index: 60;
-  width: 32px; height: 32px; border-radius: 3px;
-  display: flex; align-items: center; justify-content: center;
-  background: var(--seal); color: #F7EFE2; text-decoration: none;
-  font-family: var(--serif); font-weight: 800; font-size: 15px;
+  position: fixed; left: calc((var(--rail) - 36px) / 2); top: calc((var(--top) - 36px) / 2); z-index: 60;
+  width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+  color: rgba(128,128,128,.9);
 }
-.cta {
-  position: fixed; right: 16px; top: 12px; z-index: 60;
-  min-height: 44px; padding: 0 16px; border-radius: 4px;
-  display: inline-flex; align-items: center;
-  background: #0B0A09; color: var(--paper); text-decoration: none;
-  font-family: var(--mono); font-size: 12px; letter-spacing: .16em;
-}
-.cta:hover { background: #2a2826; }
+.seal svg { width: 32px; height: 32px; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+
 .rail {
   position: fixed; left: 0; top: 0; bottom: 0; width: var(--rail); z-index: 40; pointer-events: none;
   border-right: 1px solid rgba(128,128,128,.35);
-  background-image: repeating-linear-gradient(to bottom, rgba(128,128,128,.75) 0 1px, transparent 1px 72px);
-  background-size: 12px 100%; background-repeat: no-repeat; background-position: left 0 top 36px;
+}
+/* 윗선 아래 작은 네모 아이콘 */
+.rail__dots {
+  position: absolute; left: 50%; top: calc(var(--top) + 32px); transform: translateX(-50%);
+  display: grid; grid-template-columns: repeat(2, 5px); gap: 3px;
+}
+.rail__dots i { width: 5px; height: 5px; background: rgba(128,128,128,.9); }
+/* 레일 바깥쪽 눈금 4개 */
+.rail::after {
+  content: ''; position: absolute; left: 100%; top: calc(var(--top) + 70px);
+  width: 14px; height: 151px;
+  background: repeating-linear-gradient(to bottom, rgba(128,128,128,.75) 0 1px, transparent 1px 50px);
 }
 .chapter-label {
-  position: fixed; left: 56px; top: 30vh; z-index: 45; pointer-events: none;
+  position: fixed; left: calc(var(--rail) + 28px); top: calc(var(--top) + 28px); z-index: 45; pointer-events: none;
   font-family: var(--mono); font-size: 12px; letter-spacing: .18em;
   color: var(--ink); transition: color .3s, opacity .3s;
 }
 .chapter-label.is-light { color: var(--paper); }
+.chapter-label.is-hidden { opacity: 0; }
 
 /* ── Ch.1 히어로 ───────────────────────────── */
 .hero { position: relative; height: 100vh; overflow: hidden; background: #F1CDA5; color: var(--ink); }
@@ -78,17 +82,29 @@ h1, h2, h3, p { margin: 0; }
   border-radius: 50%; opacity: 0; z-index: 2;
   background: radial-gradient(circle, var(--grape) 0 52%, rgba(107,46,126,.55) 66%, transparent 70%);
 }
-.hero__copy {
-  position: absolute; left: 0; top: 0; bottom: 0; z-index: 3;
-  width: min(640px, 100%); padding: 22vh 40px 48px 84px;
-  display: flex; flex-direction: column; justify-content: space-between;
+.hero__copy { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+.hero__copy a { pointer-events: auto; }
+.hero__top {
+  position: absolute; left: calc(var(--rail) + 48px); bottom: 34%;
+  display: flex; flex-direction: column; align-items: flex-start;
 }
-.hero__top { display: flex; flex-direction: column; gap: 22px; }
-.hero h1 { font-family: var(--serif); font-weight: 800; font-size: clamp(44px, 6vw, 92px); line-height: 1.06; letter-spacing: -.04em; }
-.hero h1 span { font-weight: 400; color: var(--muted); }
-.hero__sub { font-family: var(--batang); font-size: 17px; line-height: 1.6; color: var(--ink-soft); }
-.hero__plus { font-family: var(--mono); font-size: 18px; color: #8A3B26; }
-.hero__desc { max-width: 380px; font-size: 13px; line-height: 1.7; color: var(--ink-soft); }
+.hero h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(44px, 5.4vw, 84px); line-height: 1.12; letter-spacing: -.045em; color: #007EA6; }
+.hero__sub { margin-top: 22px; font-family: var(--serif); font-size: clamp(17px, 1.6vw, 23px); line-height: 1.4; letter-spacing: -.02em; color: #007EA6; }
+
+/* 아래 가로선 + 레일과 만나는 별 + 태그 + 설명 */
+.hero__foot {
+  position: absolute; left: 0; right: 0; top: 72%;
+  border-top: 1px solid rgba(128,128,128,.45);
+  display: flex; align-items: flex-start; gap: 48px;
+  padding: 44px 40px 0 calc(var(--rail) + 48px);
+}
+.hero__star { position: absolute; left: var(--rail); top: 0; width: 26px; height: 26px; transform: translate(-50%, -50%); fill: var(--ink); }
+.hero__tag {
+  flex: none; padding: 10px 14px; border-radius: 3px;
+  background: rgba(244,241,234,.55); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  font-family: var(--mono); font-size: 12px; letter-spacing: .26em; color: var(--ink-soft);
+}
+.hero__desc { max-width: 440px; font-size: clamp(16px, 1.3vw, 19px); font-weight: 500; line-height: 1.5; letter-spacing: -.02em; color: var(--ink); }
 
 /* ── 공통: 왼쪽 그림 / 오른쪽 글 ───────────── */
 .split { position: relative; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); }
@@ -215,7 +231,11 @@ h1, h2, h3, p { margin: 0; }
 @media (max-width: 768px) {
   :root { --rail: 0px; }
   .rail, .chapter-label, .topline { display: none; }
-  .hero__copy { padding: 96px 24px 32px; }
+  .seal { left: 14px; top: 16px; }
+  .hero__top { left: 24px; right: 24px; top: 104px; bottom: auto; }
+  .hero__foot { top: auto; bottom: 0; flex-direction: column; gap: 14px; padding: 20px 24px 28px; background: linear-gradient(transparent, rgba(241,205,165,.85) 30%); border-top: 0; }
+  .hero__star { display: none; }
+  .hero__copy { background: linear-gradient(rgba(241,205,165,.9), rgba(241,205,165,.6) 45%, transparent 60%); }
   .split { display: block; }
   .stage { position: relative; height: 70vh; }
   .mist, .bunch-zoom { display: none; }
