@@ -8,16 +8,28 @@ const mm = gsap.matchMedia();
 
 /* ── 챕터 라벨: 지금 보이는 섹션 이름으로 바꾸기 ── */
 const label = document.getElementById('chapterLabel');
+let activeSec = null;
+let heroOnVine = false; // 히어로가 컷2(포도나무)부터는 다음 챕터 이름을 미리 보여줌
+
+function renderLabel() {
+  if (!activeSec) return;
+  const text = activeSec.id === 'ch1' && heroOnVine
+    ? document.getElementById('ch2').dataset.label
+    : activeSec.dataset.label;
+  if (label.textContent !== text) label.textContent = text;
+  label.classList.toggle('is-hidden', !text);
+}
+
 document.querySelectorAll('[data-label]').forEach((sec) => {
   ScrollTrigger.create({
     trigger: sec,
     start: 'top center',
     end: 'bottom center',
+    refreshPriority: -1, // 히어로 · 북두칠성 pin 간격이 계산된 뒤에 위치를 잡도록
     onToggle: (self) => {
       if (!self.isActive) return;
-      label.textContent = sec.dataset.label;
-      label.classList.toggle('is-hidden', !sec.dataset.label);
-      label.classList.toggle('is-light', sec.dataset.theme === 'light');
+      activeSec = sec;
+      renderLabel();
     },
   });
 });
@@ -38,7 +50,13 @@ if (!reduce) {
     /* ═══ Ch.1 — 컷1 확대 → 컷1-5 → 컷2 → 컷3 → 송이 낙하 · 터짐 ═══ */
     const hero = gsap.timeline({
       defaults: { ease: 'none' },
-      scrollTrigger: { trigger: '#ch1', start: 'top top', end: '+=380%', scrub: 0.6, pin: true },
+      scrollTrigger: {
+        trigger: '#ch1', start: 'top top', end: '+=380%', scrub: 0.6, pin: true,
+        onUpdate: (self) => {
+          const vine = self.progress >= 5 / hero.duration(); // 컷2가 나타나는 시점(5)
+          if (vine !== heroOnVine) { heroOnVine = vine; renderLabel(); }
+        },
+      },
     });
     hero
       .to('.hero__copy', { y: -80, opacity: 0, duration: 1.2 }, 0)
